@@ -3,6 +3,9 @@
   <persistence-unit name="SolPU" transaction-type="JTA">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <jta-data-source>java:app/jdbc/solicitudesInfo</jta-data-source>
+    <class>es.programia.info.entidades.Categoria</class>
+    <class>es.programia.info.entidades.Interesado</class>
+    <class>es.programia.info.entidades.SolicitudesInfo</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="eclipselink.logging.level" value="FINE"/>

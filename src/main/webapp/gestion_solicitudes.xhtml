@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>#{textos.app_titulo}</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./WEB-INF/vistas/plantilla/plantilla.xhtml">
+            <ui:define name="content"> #{textos.app_titulo}
+                <br />
+                <h:form id="formBuscar" rendered="true">
+                    <h:outputText value="#{textos.search}" styleClass="titulo"/>
+                    <br />
+                    <h:dataTable value="#{solicitudesMB.interesado}" var="inter"  border="1" >
+                        <h:column>
+                            <f:facet name="header">#{textos.name}</f:facet>
+                            <inputText value="#{inter.nombre}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Apellidos</f:facet>
+                            <inputText value="#{inter.apellido}" />
+                        </h:column>
+                    </h:dataTable>
+                    
+                    <h:commandButton value="Buscar" action="#{solicitudesMB.buscar()}">
+                  
+                    </h:commandButton>
+                </h:form>
+                <h:form id="formListaSol" rendered="#{solicitudesMB.visible}">
+                    <h:outputText value="#{textos.req_list}" styleClass="titulo"/>
+                    <br />
+                    <h:dataTable value="#{solicitudesMB.interesado.solicitudesInfoList}" var="interesado" rendered="#{solicitudesMB.visible}" border="1" >
+                        <h:column>
+                            <f:facet name="header">#{textos.req_date}</f:facet>
+                            <h:outputText value="#{interesado.fechaSolicitud}" />
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">#{textos.interest}</f:facet>
+                            <!--<h:outputText value="{interesado.categoria.categoria}" />-->
+                        </h:column>
+                    </h:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

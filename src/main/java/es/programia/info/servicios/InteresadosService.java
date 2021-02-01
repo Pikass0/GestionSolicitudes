@@ -7,12 +7,13 @@ package es.programia.info.servicios;
 
 import es.programia.info.entidades.Interesado;
 import es.programia.info.excepciones.GestionSolicitudesException;
+import javax.ejb.Local;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
-
+@Local
 @TransactionManagement(TransactionManagementType.CONTAINER)
 public interface InteresadosService {
     @TransactionAttribute(TransactionAttributeType.SUPPORTS)

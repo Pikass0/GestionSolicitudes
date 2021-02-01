@@ -8,6 +8,7 @@ package es.programia.info.servicios;
 import es.programia.info.entidades.Interesado;
 import es.programia.info.excepciones.GestionSolicitudesException;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceContext;
@@ -17,6 +18,7 @@ import javax.persistence.Query;
  *
  * @author user
  */
+@Stateless
 public class InteresadosServiceImpl implements InteresadosService{
 
     @PersistenceContext
