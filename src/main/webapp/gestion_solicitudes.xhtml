@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>#{textos.app_titulo}</title>
     </h:head>
@@ -11,38 +12,95 @@
         <ui:composition template="./WEB-INF/vistas/plantilla/plantilla.xhtml">
             <ui:define name="content"> #{textos.app_titulo}
                 <br />
+
                 <h:form id="formBuscar" rendered="true">
                     <h:outputText value="#{textos.search}" styleClass="titulo"/>
                     <br />
-                    <h:dataTable value="#{solicitudesMB.interesado}" var="inter"  border="1" >
-                        <h:column>
-                            <f:facet name="header">#{textos.name}</f:facet>
-                            <inputText value="#{inter.nombre}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Apellidos</f:facet>
-                            <inputText value="#{inter.apellido}" />
-                        </h:column>
-                    </h:dataTable>
-                    
+                    #{textos.name}
+                    <h:inputText value="#{solicitudesMB.nombre}" /> <br/>
+                    Apellidos
+                    <h:inputText value="#{solicitudesMB.apellidos}" /><br/>
+                    Empresa
+                    <h:inputText value="#{solicitudesMB.empresa}" /><br/>
                     <h:commandButton value="Buscar" action="#{solicitudesMB.buscar()}">
-                  
+                        <f:ajax event="click" render="formFecha formDatos" execute="@form"/> 
                     </h:commandButton>
                 </h:form>
-                <h:form id="formListaSol" rendered="#{solicitudesMB.visible}">
-                    <h:outputText value="#{textos.req_list}" styleClass="titulo"/>
-                    <br />
-                    <h:dataTable value="#{solicitudesMB.interesado.solicitudesInfoList}" var="interesado" rendered="#{solicitudesMB.visible}" border="1" >
-                        <h:column>
-                            <f:facet name="header">#{textos.req_date}</f:facet>
-                            <h:outputText value="#{interesado.fechaSolicitud}" />
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">#{textos.interest}</f:facet>
-                            <!--<h:outputText value="{interesado.categoria.categoria}" />-->
-                        </h:column>
-                    </h:dataTable>
+
+                <h:form id="formDatos" rendered="true" >
+                    <h:panelGroup rendered="#{solicitudesMB.visible}">
+                        <h:outputText value="#{textos.search}" styleClass="titulo"/>
+                        <br />
+                        #{textos.name}
+                        <h:inputText value="#{solicitudesMB.interesado.nombre}" readonly="#{solicitudesMB.readOnly}" /> 
+                        Apellidos
+                        <h:inputText value="#{solicitudesMB.interesado.apellidos}" readonly="#{solicitudesMB.readOnly}" /><br/>
+                        Empresa
+                        <h:inputText value="#{solicitudesMB.interesado.empresa}" readonly="#{solicitudesMB.readOnly}" /> 
+                        email
+                        <h:inputText value="#{solicitudesMB.interesado.EMail}" readonly="#{solicitudesMB.readOnly}" /><br/>
+
+
+                        Teléfono
+                        <h:inputText value="#{solicitudesMB.interesado.telefono}" readonly="#{solicitudesMB.readOnly}">
+
+                            <f:convertNumber type="number"
+                                             integerOnly="true"
+                                             maxIntegerDigits="9"
+                                             minIntegerDigits="9"
+                                             maxFractionDigits="0"
+                                             groupingUsed="false"/>
+                        </h:inputText> 
+                        Móvil
+                        <h:inputText value="#{solicitudesMB.interesado.movil}" readonly="#{solicitudesMB.readOnly}" >
+                            <f:convertNumber type="number"
+                                             integerOnly="true"
+                                             maxIntegerDigits="9"
+                                             minIntegerDigits="9"
+                                             maxFractionDigits="0"
+                                             groupingUsed="false"/>
+                        </h:inputText><br/>
+                        Provincia
+
+                        <div class="p-field p-col-12 p-md-4">
+                            <p:outputLabel for="@next" value="Provincia"/>
+                            <p:selectOneMenu id="lazy" value="#{proviciasBean.provincia}" dynamic="true" >
+                                <f:selectItem itemLabel="Select One" itemValue=""/>
+                                <f:selectItems value="#{provinciasBean.provincias}"/>
+                            </p:selectOneMenu>
+                        </div>
+
+                        <br/>
+                        <h:commandButton value="Cancelar" action="#{solicitudesMB.cancelar()}">
+                            <f:ajax event="click" render="formBuscar formFecha formDatos" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton value="Grabar modificación" action="#{solicitudesMB.grabar()}">
+                            <f:ajax event="click" render="formFecha formDatos" execute="@form"/> 
+                        </h:commandButton>
+                        <h:commandButton value="Editar" action="#{solicitudesMB.editar()}">
+                            <f:ajax event="click" render="formFecha formDatos" execute="@form"/> 
+                        </h:commandButton>
+                    </h:panelGroup>
                 </h:form>
+
+                <h:form id="formFecha"  rendered="true">
+                    <h:panelGroup rendered="#{solicitudesMB.visible}">
+                        <h:outputText value="#{textos.req_list}" styleClass="titulo"/>
+                        <br />
+                        <h:dataTable value="#{solicitudesMB.interesado.solicitudesInfoList}" var="interesado" rendered="#{solicitudesMB.visible}" border="1" >
+                            <h:column>
+                                <f:facet name="header">#{textos.req_date}</f:facet>
+                                <h:outputText value="#{interesado.fechaSolicitud}" />
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{textos.interest}</f:facet>
+                                <h:outputText value="#{interesado.idCategoria}" />
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </h:form>
+
+
             </ui:define>
         </ui:composition>
     </h:body>

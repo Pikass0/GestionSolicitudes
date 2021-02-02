@@ -68,8 +68,22 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>7.0</version>
+        </dependency>
     </dependencies>
-
+    <repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
+    
     <build>
         <plugins>
             <plugin>
@@ -128,7 +142,7 @@
                 </executions>
             </plugin>
         </plugins>
-         <resources>
+        <resources>
             <resource>
                 <directory>src/main/java</directory>
                 <excludes>

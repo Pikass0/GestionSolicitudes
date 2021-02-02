@@ -30,12 +30,18 @@ public class InteresadosServiceImpl implements InteresadosService{
         Query query = em.createNamedQuery("Interesado.findByNombreApellidoEmpresa");
         if (nombre == null) {
             nombre = "%";
+        }else{
+            nombre = nombre.toLowerCase();
         }
         if (apellidos == null) {
             apellidos = "%";
+        }else{
+            apellidos = apellidos.toLowerCase();
         }
         if (empresa == null) {
             empresa = "%";
+        }else{
+            empresa = empresa.toLowerCase();
         }
         
         query.setParameter("nombre", nombre);
@@ -66,6 +72,8 @@ public class InteresadosServiceImpl implements InteresadosService{
     public void modificarInteresado(Interesado interesado) throws GestionSolicitudesException {
         
         try{
+            Interesado interesadoAux = em.find(Interesado.class, interesado.getIdInteresado());
+            em.merge(interesado);
             
         }catch(OptimisticLockException ole){
             throw new GestionSolicitudesException("La persona interesada actual ya"
